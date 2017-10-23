@@ -9,7 +9,7 @@ public class EnermyPlane extends FlyingObjects implements Enermy {
 		width=image.getWidth();
 		Random rand = new Random();
 		y=-height;
-		x=rand.nextInt(PlaneShootingGame.WIDTH);
+		x=rand.nextInt(PlaneShootingGame.WIDTH-width);
 	}
 	@Override
 	public boolean OutOfBoder() {
