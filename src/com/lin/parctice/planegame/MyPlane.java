@@ -6,11 +6,11 @@ public class MyPlane extends FlyingObjects {
 	public MyPlane() {
 		Life=3;
 		isDoubleFire=0;
-		//this.image=
+		this.image=PlaneShootingGame.player;
 		height=image.getHeight();
 		width=image.getWidth();
-		//x=
-		//y=
+		x=150;
+		y=400;
 	}
 	public boolean isDoubleFired(){
 		return isDoubleFire>0;
@@ -24,9 +24,12 @@ public class MyPlane extends FlyingObjects {
 	public void decreaseLife() {
 		Life--;
 	}
+	public int getLife(){
+		return Life;
+	}
 	public void moveto(int x,int y){
-		this.x=x-this.width;
-		this.y=y-this.height;
+		this.x=x-this.width/2;
+		this.y=y-this.height/2;
 	}
 	@Override
 	public boolean OutOfBoder() {
@@ -58,7 +61,7 @@ public class MyPlane extends FlyingObjects {
 		int otherBottomY=others.y+height/2+others.height;
 		int thisX=x+width/2;//以玩家飞机的中心点作为比较依据
 		int thisY=y+height/2;
-		return thisX>otherRightX&&thisX<otherRightX&&thisY>otherTopY&&thisY<otherBottomY;
+		return thisX>otherLeftX&&thisX<otherRightX&&thisY>otherTopY&&thisY<otherBottomY;
 		//中心点在其他飞行物里面
 	}
 }
