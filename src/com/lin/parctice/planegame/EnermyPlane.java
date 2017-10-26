@@ -5,6 +5,7 @@ import java.util.Random;
 public class EnermyPlane extends FlyingObjects implements Enermy {
 	public int speed=3;
 	public EnermyPlane() {
+		image=PlaneShootingGame.enermy;
 		height=image.getHeight();
 		width=image.getWidth();
 		Random rand = new Random();

@@ -33,6 +33,7 @@ public class PlaneShootingGame extends JPanel {
 	public static BufferedImage player;
 	public static BufferedImage bullet;
 	public static BufferedImage award;
+	public static BufferedImage enermy;
 	private int loopTime=0;
 	private int BulletLoopTime=0;
 	static {
@@ -42,6 +43,8 @@ public class PlaneShootingGame extends JPanel {
 			start=ImageIO.read(new File(".\\Image\\start.png"));
 			pause=ImageIO.read(new File(".\\Image\\pause.png"));
 			gameover=ImageIO.read(new File(".\\Image\\gameover.png"));
+			enermy=ImageIO.read(new File(".\\Image\\airplane.png"));
+			award=ImageIO.read(new File(".\\Image\\bee.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -166,7 +169,7 @@ public class PlaneShootingGame extends JPanel {
 	}
 	public void enterFlying(){
 		loopTime++;
-		while(loopTime%40==0){
+		if(loopTime%40==0){
 			FlyingObjects newobj= nextFlyingObj();
 			flyings.add(newobj);
 		}
@@ -182,7 +185,7 @@ public class PlaneShootingGame extends JPanel {
 	}
 	public void shootABullet(){
 		BulletLoopTime++;
-		while(BulletLoopTime%10==0){
+		if(BulletLoopTime%10==0){
 			Bullet temp[] =PlayerPlane.fire();
 			for(int i=0;i<temp.length;i++)
 				bullets.add(temp[i]);
