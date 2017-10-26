@@ -3,17 +3,17 @@ package com.lin.parctice.planegame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GraphicsDevice;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -31,11 +31,17 @@ public class PlaneShootingGame extends JPanel {
 	public static BufferedImage gameover;
 	public static BufferedImage background;
 	public static BufferedImage player;
+	public static BufferedImage bullet;
+	public static BufferedImage award;
+	private int loopTime=0;
+	private int BulletLoopTime=0;
 	static {
 		try {
 			player=ImageIO.read(new File(".\\Image\\hero0.png"));
 			background=ImageIO.read(new File(".\\Image\\background.png"));
 			start=ImageIO.read(new File(".\\Image\\start.png"));
+			pause=ImageIO.read(new File(".\\Image\\pause.png"));
+			gameover=ImageIO.read(new File(".\\Image\\gameover.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,6 +113,8 @@ public class PlaneShootingGame extends JPanel {
 				PlayerPlane= new MyPlane();
 				score=0;
 				state=START;
+				loopTime=0;
+				BulletLoopTime=0;
 				break;
 			}
 		}
@@ -157,22 +165,52 @@ public class PlaneShootingGame extends JPanel {
 		}, delay,frequency);
 	}
 	public void enterFlying(){
-		
+		loopTime++;
+		while(loopTime%40==0){
+			FlyingObjects newobj= nextFlyingObj();
+			flyings.add(newobj);
+		}
 	}
 	public void takeAStep(){
-		
+		for(FlyingObjects obj:flyings){
+			obj.step();
+		}
+		for(Bullet bt:bullets){
+			bt.step();
+		}
+		PlayerPlane.step();
 	}
 	public void shootABullet(){
-		
+		BulletLoopTime++;
+		while(BulletLoopTime%10==0){
+			Bullet temp[] =PlayerPlane.fire();
+			for(int i=0;i<temp.length;i++)
+				bullets.add(temp[i]);
+		}
 	}
 	public void isHit(){
-		
+		for(int i=0;i<bullets.size();i++){
+			isHitByBullet(bullets.get(i));
+		}
 	}
 	public void checkOutofBorder(){
-		
+		for(int i=0;i<flyings.size();i++){
+			if(flyings.get(i).OutOfBoder()){
+				flyings.remove(i);
+				i--;
+			}
+		}
+		for(int i=0;i<bullets.size();i++){
+			if(bullets.get(i).OutOfBoder()){
+				bullets.remove(i);
+				i--;
+			}
+		}
 	}
 	public void checkGameOver(){
-		
+		if(isGameOver()){
+			state=GAMEOVER;
+		}
 	}
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("打飞机小游戏");
@@ -181,9 +219,23 @@ public class PlaneShootingGame extends JPanel {
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setAlwaysOnTop(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setIconImage(image);
+		frame.setIconImage(new ImageIcon(".\\Image\\icon.jpg").getImage());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		game.startGame();
+	}
+	public FlyingObjects nextFlyingObj(){
+		Random rand = new Random();
+		int temp=rand.nextInt(20);
+		if(temp<5){
+			return new FlyingAwards();
+		}
+		else return new EnermyPlane();
+	}
+	public boolean isGameOver(){
+		return false;
+	}
+	public void isHitByBullet(Bullet b){
+		
 	}
 }

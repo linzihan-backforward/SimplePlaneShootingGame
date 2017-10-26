@@ -7,7 +7,7 @@ public class FlyingAwards extends FlyingObjects implements Awards {
 	private int ySpeed=2;
 	private int awardType;
 	public FlyingAwards() {
-		//this.image=
+		this.image=PlaneShootingGame.award;
 		height=image.getHeight();
 		width=image.getWidth();
 		y=-height;

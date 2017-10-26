@@ -20,5 +20,9 @@ public class EnermyPlane extends FlyingObjects implements Enermy {
 	public void step() {
 		y+=speed;
 	}
+	@Override
+	public int getScore() {
+		return 5;
+	}
 
 }
