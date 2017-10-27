@@ -18,6 +18,9 @@ public class MyPlane extends FlyingObjects {
 	public void SetDoubleFire(){
 		isDoubleFire=1;
 	}
+	public void deDoubleFire(){
+		isDoubleFire=0;
+	}
 	public void addLife(){
 		Life++;
 	}

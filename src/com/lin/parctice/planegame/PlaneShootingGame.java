@@ -3,6 +3,7 @@ package com.lin.parctice.planegame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -45,6 +46,7 @@ public class PlaneShootingGame extends JPanel {
 			gameover=ImageIO.read(new File(".\\Image\\gameover.png"));
 			enermy=ImageIO.read(new File(".\\Image\\airplane.png"));
 			award=ImageIO.read(new File(".\\Image\\bee.png"));
+			bullet=ImageIO.read(new File(".\\Image\\bullet.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,6 +59,7 @@ public class PlaneShootingGame extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		g.drawImage(background, 0, 0, null);
+		//g.drawImage(bullet, 100, 100, null);
 		paintMyPlane(g);
 		paintBullet(g);
 		paintFlyingObjects(g);
@@ -236,9 +239,38 @@ public class PlaneShootingGame extends JPanel {
 		else return new EnermyPlane();
 	}
 	public boolean isGameOver(){
-		return false;
+		for(int i=0;i<flyings.size();i++){
+			FlyingObjects ob=flyings.get(i);
+			if(PlayerPlane.ishit(ob)){
+				PlayerPlane.decreaseLife();
+				PlayerPlane.deDoubleFire();
+				flyings.remove(ob);
+				i--;
+			}
+		}
+		return PlayerPlane.getLife()<=0;
 	}
 	public void isHitByBullet(Bullet b){
-		
+		for(int i=0;i<flyings.size();i++){
+			FlyingObjects obj=flyings.get(i);
+			if(obj.IsGetHit(b)){
+				if(obj instanceof Enermy){
+					Enermy e=(Enermy)obj;
+					score+=e.getScore();
+				}
+				else{
+					Awards aw=(Awards) obj;
+					int type=aw.getAwardType();
+					if(type==Awards.ADDLIFE){
+						PlayerPlane.addLife();
+					}
+					else if(type==Awards.DOUBLEFIRE){
+						PlayerPlane.SetDoubleFire();
+					}
+				}
+				flyings.remove(obj);
+				i--;
+			}
+		}
 	}
 }

@@ -1,7 +1,7 @@
 package com.lin.parctice.planegame;
 
 public interface Awards {
-	public static int DOUBLEFIRE=1;
-	public static int ADDLIFE=2;
+	public static int DOUBLEFIRE=0;
+	public static int ADDLIFE=1;
 	public int getAwardType();
 }

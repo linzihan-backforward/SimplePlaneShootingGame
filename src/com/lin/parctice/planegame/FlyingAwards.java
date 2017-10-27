@@ -13,6 +13,7 @@ public class FlyingAwards extends FlyingObjects implements Awards {
 		y=-height;
 		Random rand =new Random();
 		x=rand.nextInt(PlaneShootingGame.WIDTH-width);
+		awardType=rand.nextInt(2);
 	}
 	@Override
 	public int getAwardType() {

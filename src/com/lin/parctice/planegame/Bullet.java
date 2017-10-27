@@ -15,7 +15,7 @@ public class Bullet extends FlyingObjects {
 	}
 	@Override
 	public boolean OutOfBoder() {
-		return y>(-height);
+		return y<(-height);
 	}
 
 	@Override
