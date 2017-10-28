@@ -3,7 +3,7 @@ package com.lin.parctice.planegame;
 import java.util.Random;
 
 public class EnermyPlane extends FlyingObjects implements Enermy {
-	public int speed=3;
+	public int speed;
 	public EnermyPlane() {
 		image=PlaneShootingGame.enermy;
 		height=image.getHeight();
@@ -11,6 +11,7 @@ public class EnermyPlane extends FlyingObjects implements Enermy {
 		Random rand = new Random();
 		y=-height;
 		x=rand.nextInt(PlaneShootingGame.WIDTH-width);
+		speed=rand.nextInt(3)+2;
 	}
 	@Override
 	public boolean OutOfBoder() {

@@ -45,4 +45,14 @@ public abstract class FlyingObjects {
 	public boolean IsGetHit(Bullet bullet){
 		return ((bullet.x>this.x)&&(bullet.x<this.x+width))&&((bullet.y>this.y)&&(bullet.y<this.y+height));
 	}
+	public boolean isPickByPlane(MyPlane mp){
+		int otherLeftX=mp.x-width/2;
+		int otherRightX=mp.x+width/2+mp.width;
+		int otherTopY=mp.y-height/2;
+		int otherBottomY=mp.y+height/2+mp.height;
+		int thisX=x+width/2;//以玩家飞机的中心点作为比较依据
+		int thisY=y+height/2;
+		return thisX>otherLeftX&&thisX<otherRightX&&thisY>otherTopY&&thisY<otherBottomY;
+		//中心点在其他飞行物里面
+	}
 }
