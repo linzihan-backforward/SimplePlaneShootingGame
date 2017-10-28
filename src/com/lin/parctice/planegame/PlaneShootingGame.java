@@ -208,7 +208,11 @@ public class PlaneShootingGame extends JPanel {
 
 	public void isHit() {
 		for (int i = 0; i < bullets.size(); i++) {
-			isHitByBullet(bullets.get(i));
+			Bullet  b=bullets.get(i);
+			if(isHitByBullet(b)){
+				bullets.remove(b);
+				i--;
+			}
 		}
 	}
 
@@ -289,7 +293,8 @@ public class PlaneShootingGame extends JPanel {
 		return PlayerPlane.getLife() <= 0;
 	}
 
-	public void isHitByBullet(Bullet b) {
+	public boolean isHitByBullet(Bullet b) {
+		int flag=0;
 		for (int i = 0; i < flyings.size(); i++) {
 			FlyingObjects obj = flyings.get(i);
 			if (obj instanceof Enermy) {
@@ -298,8 +303,11 @@ public class PlaneShootingGame extends JPanel {
 					score += e.getScore();
 					flyings.remove(obj);
 					i--;
+					flag=1;
 				}
 			}
 		}
+		if(flag>0) return true;
+		else return false;
 	}
 }
